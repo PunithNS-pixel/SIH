@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Agri Disease Risk Heatmap</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5faff;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h2 {
+      color: #2c3e50;
+      margin-top: 40px;
+    }
+    #heatmap {
+      width: 80%;
+      height: 400px;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🌾 Paddy Disease Risk Heatmap</h2>
+  <div id="heatmap"></div>
+
+  <script>
+    // Simulated disease risk data (0 = low risk, 1 = high risk)
+    const riskData = [
+      [0.1, 0.3, 0.5, 0.7],
+      [0.4, 0.9, 0.2, 0.6],
+      [0.7, 0.6, 0.8, 0.3],
+      [0.2, 0.5, 0.4, 0.7]
+    ];
+
+    // Optional hover text for each cell
+    const hoverText = riskData.map((row, i) =>
+      row.map((value, j) => `Row ${i+1}, Col ${j+1}<br>Risk: ${value}`)
+    );
+
+    const heatmapData = [{
+      z: riskData,
+      type: 'heatmap',
+      colorscale: 'YlOrRd',  // Green → Yellow → Red
+      hoverinfo: 'text',
+      text: hoverText,
+      colorbar: {
+        title: 'Risk Level (0=Low, 1=High)',
+        titleside: 'right'
+      }
+    }];
+
+    const layout = {
+      title: 'Paddy Disease Risk Zones',
+      xaxis: { title: 'West → East', dtick: 1 },
+      yaxis: { title: 'North → South', dtick: 1, autorange: 'reversed' },
+      margin: { t: 50 }
+    };
+
+    Plotly.newPlot('heatmap', heatmapData, layout);
+  </script>
+
+</body>
+</html>
