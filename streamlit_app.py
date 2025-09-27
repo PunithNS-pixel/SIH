@@ -17,14 +17,13 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import pickle
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
 # Weather forecasting and location-based services
 import requests
 import json
-from datetime import datetime, timedelta
 from PIL import Image
 import numpy as np
 # API Configuration
@@ -41,9 +40,6 @@ try:
 except ImportError:
     PERFECT_MODEL_AVAILABLE = False
     print("Perfect model not available, using fallback methods")
-
-# Additional imports for comprehensive analysis
-import datetime
 
 def comprehensive_image_analysis(uploaded_file):
     """
@@ -117,7 +113,7 @@ Provide a comprehensive analysis covering all aspects above. Be specific, detail
                 'success': True,
                 'analysis': response.text,
                 'model': 'Google Gemini 2.5 Flash',
-                'timestamp': datetime.datetime.now().isoformat()
+                'timestamp': datetime.now().isoformat()
             }
         else:
             return {
@@ -3862,7 +3858,7 @@ Provide a comprehensive, detailed analysis."""
                                             "image_processed": True,
                                             "enhancement_applied": True,
                                             "api_response_length": len(response.text),
-                                            "timestamp": datetime.datetime.now().isoformat()
+                                            "timestamp": datetime.now().isoformat()
                                         })
                                 else:
                                     st.error("Failed to get comprehensive analysis")
