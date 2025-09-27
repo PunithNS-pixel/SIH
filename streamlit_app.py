@@ -319,12 +319,46 @@ st.markdown("""
 @st.cache_data
 def load_data():
     """Load and cache the dataset"""
+    import os
+    
+    # Get script directory safely
     try:
-        df = pd.read_csv("Crop_recommendation.csv.xls")
-        return df
-    except FileNotFoundError:
-        st.error("❌ Dataset file 'Crop_recommendation.csv.xls' not found!")
-        st.stop()
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        script_dir = os.getcwd()
+    
+    # Try multiple possible paths for the dataset
+    possible_paths = [
+        "Crop_recommendation.csv.xls",  # Current directory
+        os.path.join(script_dir, "Crop_recommendation.csv.xls"),  # Same dir as script
+        os.path.join(os.getcwd(), "Crop_recommendation.csv.xls"),  # Working directory
+    ]
+    
+    for dataset_path in possible_paths:
+        try:
+            if os.path.exists(dataset_path):
+                df = pd.read_csv(dataset_path)
+                st.success(f"✅ Dataset loaded successfully from: {dataset_path}")
+                return df
+        except Exception as e:
+            continue
+    
+    # If no path works, show detailed error information
+    st.error("❌ Dataset file 'Crop_recommendation.csv.xls' not found!")
+    st.error("📁 **Debugging Information:**")
+    st.write(f"Current working directory: {os.getcwd()}")
+    st.write(f"Script directory: {script_dir}")
+    st.write("Files in current directory:")
+    
+    try:
+        files = os.listdir(os.getcwd())
+        for file in sorted(files):
+            if file.endswith(('.csv', '.xls', '.xlsx')):
+                st.write(f"  📄 {file}")
+    except Exception as e:
+        st.write(f"Error listing files: {e}")
+    
+    st.stop()
 
 @st.cache_resource
 def train_model():

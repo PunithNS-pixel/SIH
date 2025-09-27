@@ -24,11 +24,15 @@ Farm\ Harmful\ Animal\ Dataset/
 
 # Large files
 *.pkl
-*.csv.xls
-*.xls
-*.xlsx
 confusion_matrix.png
 crop_correlations.png
+
+# Data files (allow essential dataset)
+# *.xls  # Commented out to allow Crop_recommendation.csv.xls
+*.xlsx
+
+# Essential dataset - explicitly allow
+!Crop_recommendation.csv.xls
 
 # IDE and OS
 .vscode/
