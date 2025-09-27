@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+.coverage
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Large dataset files (keep structure but ignore large files)
+Farm\ Harmful\ Animal\ Dataset/train/
+Farm\ Harmful\ Animal\ Dataset/test/
+*.pkl
+*.csv.xls
+
+# Model files (keep small ones, ignore large trained models)
+best_crop_recommendation_model.pkl
+perfect_animal_model.pkl
+# Exclude validation dataset as well
+Farm\ Harmful\ Animal\ Dataset/validation/
