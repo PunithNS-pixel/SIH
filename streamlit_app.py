@@ -166,13 +166,21 @@ def extract_analysis_insights(analysis_text):
     
     return insights
 
-# Configure APIs
-GOOGLE_API_KEY = "AIzaSyAplOzyIFzlNkYkCKRhw6O08d1ev6mhaGY"
+# Configure APIs - Use Streamlit secrets in production
+try:
+    # Try to load from Streamlit secrets (for cloud deployment)
+    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+    MARKET_PRICE_API_KEY = st.secrets["MARKET_PRICE_API_KEY"]
+    OPENWEATHER_API_KEY = st.secrets.get("OPENWEATHER_API_KEY", "bd5e378503939ddaee76f12ad7a97608")
+except (KeyError, AttributeError):
+    # Fallback for local development
+    GOOGLE_API_KEY = "AIzaSyAplOzyIFzlNkYkCKRhw6O08d1ev6mhaGY"
+    MARKET_PRICE_API_KEY = "579b464db66ec23bdd0000019f651f7cc6f242d055ddae12fab25e62"
+    OPENWEATHER_API_KEY = "bd5e378503939ddaee76f12ad7a97608"
+
+# Supabase Configuration (if needed)
 SUPABASE_URL = "https://zmjzsbsefukaqetnwfuj.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptanpzYnNlZnVrYXFldG53ZnVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNTA0OTUsImV4cCI6MjA3MzgyNjQ5NX0.Zh2gldYWK_6pXBX0jXHkaT9ouK50KGXk4Ib71SP_in4"
-
-# Crop Market Price API Configuration
-MARKET_PRICE_API_KEY = "579b464db66ec23bdd0000019f651f7cc6f242d055ddae12fab25e62"
 
 # Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
