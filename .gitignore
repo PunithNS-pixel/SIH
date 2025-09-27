@@ -14,14 +14,13 @@ venv/
 env/
 ENV/
 
-# Dataset files - exclude all images and labels
+# Dataset files - exclude large dataset but allow sample
 Farm\ Harmful\ Animal\ Dataset/
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.bmp
-*.tiff
+# Allow sample dataset images
+!Sample_Farm_Animal_Dataset/
+!Sample_Farm_Animal_Dataset/**/*.jpg
+!Sample_Farm_Animal_Dataset/**/*.jpeg
+!Sample_Farm_Animal_Dataset/**/*.png
 
 # Large files
 *.pkl
