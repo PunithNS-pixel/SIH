@@ -1,13 +1,16 @@
-# Streamlit Configuration
+# Streamlit Configuration - Cloud Deployment Ready
 [server]
 headless = true
-enableCORS = false
+enableCORS = true
+enableXsrfProtection = false
 port = 8501
+maxUploadSize = 200
 
 [browser]
 gatherUsageStats = false
 
 [theme]
+base = "light"
 primaryColor = "#4CAF50"
 backgroundColor = "#FFFFFF"  
 secondaryBackgroundColor = "#f0f8f0"
