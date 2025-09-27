@@ -618,7 +618,7 @@ def main():
     # Sidebar for navigation
     st.sidebar.markdown("## 🧭 Navigation")
     page = st.sidebar.selectbox("Choose a page:", 
-                               ["🎯 Crop Prediction", "🌱 Fertilizer Recommendation", "💰 Crop Market Prices", "🐄 Animal Classification", "📊 Dataset Analysis", "🤖 Model Information", "ℹ️ About"])
+                               ["🎯 Crop Prediction", "🌱 Fertilizer Recommendation", "💰 Crop Market Prices", "🐄 Animal Classification", "🌍 Multilingual Interface", "🌿 Sustainable Farming AI", "📊 Dataset Analysis", "🤖 Model Information", "ℹ️ About"])
     
     if page == "🎯 Crop Prediction":
         prediction_page(model, accuracy, df)
@@ -628,6 +628,10 @@ def main():
         crop_market_prices_page()
     elif page == "🐄 Animal Classification":
         animal_classification_page()
+    elif page == "🌍 Multilingual Interface":
+        multilingual_interface_page()
+    elif page == "🌿 Sustainable Farming AI":
+        sustainable_farming_ai_page()
     elif page == "📊 Dataset Analysis":
         analysis_page(df)
     elif page == "🤖 Model Information":
@@ -4168,6 +4172,530 @@ def about_page():
     ---
     *Last updated: {datetime.now().strftime("%B %d, %Y at %I:%M %p")}*
     """)
+
+def multilingual_interface_page():
+    """Multilingual Web Interface for Agricultural Advisory"""
+    st.header("🌍 Multilingual Agricultural Advisory")
+    st.markdown("**Access agricultural information in your preferred language**")
+    
+    # Language selection
+    languages = {
+        "English": "en",
+        "हिंदी (Hindi)": "hi", 
+        "ਪੰਜਾਬੀ (Punjabi)": "pa",
+        "اردو (Urdu)": "ur",
+        "ગુજરાતી (Gujarati)": "gu"
+    }
+    
+    selected_language = st.selectbox("🗣️ Select Language / भाषा चुनें:", list(languages.keys()))
+    lang_code = languages[selected_language]
+    
+    # Translation dictionaries
+    translations = {
+        "en": {
+            "title": "Agricultural Advisory System",
+            "weather": "Weather Information",
+            "crops": "Crop Recommendations", 
+            "market": "Market Prices",
+            "advice": "Agricultural Advice",
+            "input_location": "Enter your location:",
+            "get_weather": "Get Weather",
+            "temperature": "Temperature",
+            "humidity": "Humidity", 
+            "description": "Description",
+            "suitable_crops": "Suitable crops for your region:",
+            "market_info": "Current market prices:",
+            "farming_tips": "Farming Tips",
+            "water_management": "Water Management",
+            "soil_health": "Soil Health",
+            "pest_control": "Pest Control"
+        },
+        "hi": {
+            "title": "कृषि सलाहकार प्रणाली",
+            "weather": "मौसम की जानकारी", 
+            "crops": "फसल सिफारिशें",
+            "market": "बाजार मूल्य",
+            "advice": "कृषि सलाह",
+            "input_location": "अपना स्थान दर्ज करें:",
+            "get_weather": "मौसम प्राप्त करें",
+            "temperature": "तापमान",
+            "humidity": "नमी",
+            "description": "विवरण", 
+            "suitable_crops": "आपके क्षेत्र के लिए उपयुक्त फसलें:",
+            "market_info": "वर्तमान बाजार मूल्य:",
+            "farming_tips": "कृषि युक्तियाँ",
+            "water_management": "जल प्रबंधन",
+            "soil_health": "मिट्टी का स्वास्थ्य", 
+            "pest_control": "कीट नियंत्रण"
+        },
+        "pa": {
+            "title": "ਖੇਤੀਬਾੜੀ ਸਲਾਹਕਾਰ ਸਿਸਟਮ",
+            "weather": "ਮੌਸਮ ਦੀ ਜਾਣਕਾਰੀ",
+            "crops": "ਫਸਲ ਸਿਫਾਰਸ਼ਾਂ", 
+            "market": "ਮਾਰਕਿਟ ਕੀਮਤਾਂ",
+            "advice": "ਖੇਤੀਬਾੜੀ ਸਲਾਹ",
+            "input_location": "ਆਪਣਾ ਸਥਾਨ ਦਰਜ਼ ਕਰੋ:",
+            "get_weather": "ਮੌਸਮ ਪ੍ਰਾਪਤ ਕਰੋ", 
+            "temperature": "ਤਾਪਮਾਨ",
+            "humidity": "ਨਮੀ",
+            "description": "ਵੇਰਵਾ",
+            "suitable_crops": "ਤੁਹਾਡੇ ਖੇਤਰ ਲਈ ਢੁਕਵੀਂ ਫਸਲਾਂ:",
+            "market_info": "ਮੌਜੂਦਾ ਮਾਰਕਿਟ ਕੀਮਤਾਂ:",
+            "farming_tips": "ਖੇਤੀ ਦੇ ਨੁਸਖੇ",
+            "water_management": "ਪਾਣੀ ਪ੍ਰਬੰਧਨ",
+            "soil_health": "ਮਿੱਟੀ ਦੀ ਸਿਹਤ",
+            "pest_control": "ਕੀਟ ਨਿਯੰਤਰਣ"
+        },
+        "ur": {
+            "title": "زرعی مشاورتی نظام",
+            "weather": "موسمی معلومات",
+            "crops": "فصل کی تجاویز", 
+            "market": "مارکیٹ کی قیمتیں",
+            "advice": "زرعی مشورہ",
+            "input_location": "اپنا مقام درج کریں:",
+            "get_weather": "موسم حاصل کریں",
+            "temperature": "درجہ حرارت", 
+            "humidity": "نمی",
+            "description": "تفصیل",
+            "suitable_crops": "آپ کے علاقے کے لیے موزوں فصلیں:",
+            "market_info": "موجودہ مارکیٹ کی قیمتیں:",
+            "farming_tips": "کاشتکاری کے نکات",
+            "water_management": "پانی کا انتظام", 
+            "soil_health": "مٹی کی صحت",
+            "pest_control": "کیڑے کنٹرول"
+        },
+        "gu": {
+            "title": "કૃષિ સલાહકાર પ્રણાલી",
+            "weather": "હવામાન માહિતી",
+            "crops": "પાક ભલામણો",
+            "market": "બજાર ભાવ", 
+            "advice": "કૃષિ સલાહ",
+            "input_location": "તમારું સ્થાન દાખલ કરો:",
+            "get_weather": "હવામાન મેળવો",
+            "temperature": "તાપમાન",
+            "humidity": "ભેજ",
+            "description": "વર્ણન",
+            "suitable_crops": "તમારા વિસ્તાર માટે યોગ્ય પાકો:",
+            "market_info": "વર્તમાન બજાર ભાવ:",
+            "farming_tips": "ખેતી ટીપ્સ", 
+            "water_management": "પાણી વ્યવસ્થાપન",
+            "soil_health": "માટીની આરોગ્ય",
+            "pest_control": "જંતુ નિયંત્રણ"
+        }
+    }
+    
+    # Get current language translations
+    current_lang = translations.get(lang_code, translations["en"])
+    
+    # Create tabs for different sections
+    tab1, tab2, tab3, tab4 = st.tabs([
+        current_lang["weather"], 
+        current_lang["crops"],
+        current_lang["market"], 
+        current_lang["advice"]
+    ])
+    
+    with tab1:
+        st.subheader(current_lang["weather"])
+        location = st.text_input(current_lang["input_location"])
+        if st.button(current_lang["get_weather"]):
+            if location:
+                # Mock weather data (in real implementation, integrate with weather API)
+                st.success(f"📍 {location}")
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric(current_lang["temperature"], "28°C")
+                with col2:
+                    st.metric(current_lang["humidity"], "65%") 
+                with col3:
+                    st.metric(current_lang["description"], "Sunny")
+            else:
+                st.warning("Please enter a location")
+    
+    with tab2:
+        st.subheader(current_lang["crops"])
+        st.markdown(f"### {current_lang['suitable_crops']}")
+        
+        # Sample crop recommendations based on language
+        if lang_code == "hi":
+            crops = ["गेहूं", "चावल", "मक्का", "बाजरा", "दालें"]
+        elif lang_code == "pa": 
+            crops = ["ਕਣਕ", "ਚਾਵਲ", "ਮੱਕੀ", "ਬਾਜਰਾ", "ਦਾਲਾਂ"]
+        elif lang_code == "ur":
+            crops = ["گندم", "چاول", "مکئی", "باجرہ", "دالیں"] 
+        elif lang_code == "gu":
+            crops = ["ઘઉં", "ચોખા", "મકાઈ", "બાજરી", "દાળ"]
+        else:
+            crops = ["Wheat", "Rice", "Corn", "Millet", "Pulses"]
+            
+        for crop in crops:
+            st.write(f"🌾 {crop}")
+    
+    with tab3:
+        st.subheader(current_lang["market"]) 
+        st.markdown(f"### {current_lang['market_info']}")
+        
+        # Mock market data
+        market_data = {
+            "Wheat/गेहूं/ਕਣਕ/گندم/ઘઉં": "₹2,100/quintal",
+            "Rice/चावल/ਚਾਵਲ/چاول/ચોખા": "₹3,500/quintal", 
+            "Corn/मक्का/ਮੱਕੀ/مکئی/મકાઈ": "₹1,800/quintal"
+        }
+        
+        for crop, price in market_data.items():
+            st.write(f"💰 {crop}: {price}")
+    
+    with tab4:
+        st.subheader(current_lang["advice"])
+        
+        advice_sections = [
+            current_lang["farming_tips"],
+            current_lang["water_management"], 
+            current_lang["soil_health"],
+            current_lang["pest_control"]
+        ]
+        
+        for section in advice_sections:
+            with st.expander(section):
+                if lang_code == "hi":
+                    st.write("यहाँ आपको संबंधित सलाह मिलेगी।")
+                elif lang_code == "pa":
+                    st.write("ਇੱਥੇ ਤੁਹਾਨੂੰ ਸੰਬੰਧਿਤ ਸਲਾਹ ਮਿਲੇਗੀ।")
+                elif lang_code == "ur": 
+                    st.write("یہاں آپ کو متعلقہ مشورہ ملے گا۔")
+                elif lang_code == "gu":
+                    st.write("અહીં તમને સંબંધિત સલાહ મળશે।")
+                else:
+                    st.write("Here you will find relevant agricultural advice.")
+
+def sustainable_farming_ai_page():
+    """Sustainable Farming AI Advisory System"""
+    st.header("🌿 Sustainable Farming AI Advisory")
+    st.markdown("**AI-powered guidance for sustainable and crisis-resilient farming practices**")
+    
+    # Create main tabs
+    tab1, tab2, tab3, tab4 = st.tabs(["💧 Water Crisis", "🌱 Organic Farming", "🏆 Sustainability Score", "📊 Crisis Dashboard"])
+    
+    with tab1:
+        st.subheader("💧 Water Conservation & Crisis Management")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("### Current Water Status")
+            water_level = st.slider("Current Water Level (%)", 0, 100, 45)
+            rainfall = st.number_input("Expected Rainfall (mm)", 0, 500, 120)
+            crop_area = st.number_input("Cultivated Area (hectares)", 1, 1000, 50)
+            
+        with col2:
+            st.markdown("### AI Recommendations")
+            
+            # AI-powered water management recommendations
+            if water_level < 30:
+                st.error("🚨 **CRITICAL WATER SHORTAGE**")
+                st.markdown("""
+                **Immediate Actions Required:**
+                - Switch to drought-resistant crops (millet, sorghum)
+                - Implement drip irrigation immediately
+                - Reduce cultivated area by 40%
+                - Harvest rainwater urgently
+                """)
+            elif water_level < 50:
+                st.warning("⚠️ **MODERATE WATER STRESS**") 
+                st.markdown("""
+                **Recommended Actions:**
+                - Optimize irrigation scheduling
+                - Use mulching to reduce evaporation
+                - Consider water-efficient crops
+                - Install moisture sensors
+                """)
+            else:
+                st.success("✅ **ADEQUATE WATER SUPPLY**")
+                st.markdown("""
+                **Optimization Suggestions:**
+                - Maintain current practices
+                - Plan for future conservation
+                - Consider expanding cultivation
+                """)
+        
+        # Water usage calculator
+        st.markdown("### 💧 Water Usage Calculator")
+        col3, col4, col5 = st.columns(3)
+        
+        with col3:
+            crop_type = st.selectbox("Crop Type:", ["Rice", "Wheat", "Cotton", "Sugarcane", "Millet"])
+            
+        with col4:
+            irrigation_type = st.selectbox("Irrigation Method:", ["Flood", "Sprinkler", "Drip", "Furrow"])
+            
+        with col5:
+            if st.button("Calculate Water Need"):
+                # Water requirement calculation (liters per hectare per day)
+                crop_water_req = {
+                    "Rice": 2500, "Wheat": 900, "Cotton": 1200, 
+                    "Sugarcane": 2000, "Millet": 500
+                }
+                
+                irrigation_efficiency = {
+                    "Flood": 0.45, "Sprinkler": 0.75, 
+                    "Drip": 0.90, "Furrow": 0.60
+                }
+                
+                base_req = crop_water_req[crop_type]
+                efficiency = irrigation_efficiency[irrigation_type]
+                actual_req = base_req / efficiency
+                
+                st.metric("Daily Water Need", f"{actual_req:,.0f} L/ha")
+                st.metric("Weekly Need", f"{actual_req * 7:,.0f} L/ha")
+    
+    with tab2:
+        st.subheader("🌱 Organic Farming Transition Assistant")
+        
+        # Organic farming questionnaire
+        st.markdown("### 📝 Farm Assessment")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            current_farming = st.selectbox("Current Farming Type:", 
+                                         ["Conventional", "Semi-organic", "Organic", "Natural"])
+            soil_health = st.slider("Soil Health Score", 1, 10, 6)
+            chemical_usage = st.slider("Chemical Usage (kg/hectare/year)", 0, 200, 50)
+            
+        with col2:
+            pest_issues = st.multiselect("Common Pest Issues:", 
+                                       ["Aphids", "Caterpillars", "Fungal diseases", 
+                                        "Bacterial diseases", "Nematodes", "Weeds"])
+            budget = st.selectbox("Transition Budget:", ["Low", "Medium", "High"])
+            
+        if st.button("Generate Organic Transition Plan"):
+            st.markdown("### 🎯 Your Personalized Transition Plan")
+            
+            # Generate AI recommendations based on inputs
+            transition_time = 3 - (soil_health / 5)  # Better soil = faster transition
+            
+            st.info(f"**Estimated Transition Time:** {transition_time:.1f} years")
+            
+            # Phase-wise recommendations
+            phases = ["Phase 1 (0-6 months)", "Phase 2 (6-18 months)", "Phase 3 (18+ months)"]
+            
+            for i, phase in enumerate(phases):
+                with st.expander(phase):
+                    if i == 0:
+                        st.markdown("""
+                        **🌱 Foundation Phase:**
+                        - Stop chemical fertilizers gradually (reduce by 50%)
+                        - Start composting organic matter
+                        - Introduce beneficial insects
+                        - Begin soil testing program
+                        - Plant cover crops
+                        """)
+                    elif i == 1:
+                        st.markdown("""
+                        **🔄 Transition Phase:**
+                        - Complete elimination of synthetic chemicals
+                        - Implement integrated pest management
+                        - Establish organic certification process
+                        - Expand organic matter incorporation
+                        - Monitor soil microbial activity
+                        """)
+                    else:
+                        st.markdown("""
+                        **✅ Certification Phase:**
+                        - Achieve organic certification
+                        - Premium market access
+                        - Sustainable yield optimization
+                        - Knowledge sharing with community
+                        - Continuous improvement practices
+                        """)
+        
+        # Organic alternatives database
+        st.markdown("### 🧪 Natural Alternatives Database")
+        
+        problem = st.selectbox("Select Problem:", 
+                             ["Nitrogen Deficiency", "Phosphorus Deficiency", 
+                              "Pest Control", "Fungal Diseases", "Weed Management"])
+        
+        organic_solutions = {
+            "Nitrogen Deficiency": {
+                "solutions": ["Compost", "Green manure", "Azolla cultivation", "Rhizobium inoculation"],
+                "application": "Apply 5-10 tons compost per hectare before sowing"
+            },
+            "Phosphorus Deficiency": {
+                "solutions": ["Bone meal", "Rock phosphate", "Mycorrhizal fungi", "Phosphorus-solubilizing bacteria"],
+                "application": "Mix 200kg rock phosphate per hectare with organic matter"
+            },
+            "Pest Control": {
+                "solutions": ["Neem oil", "Pheromone traps", "Beneficial insects", "Companion planting"],
+                "application": "Spray 3% neem oil solution every 7-10 days during pest season"
+            },
+            "Fungal Diseases": {
+                "solutions": ["Trichoderma", "Copper fungicides", "Baking soda spray", "Proper drainage"],
+                "application": "Apply Trichoderma at 5g per kg of seed before sowing"
+            },
+            "Weed Management": {
+                "solutions": ["Mulching", "Hand weeding", "Cover crops", "Flame weeding"],
+                "application": "Apply 5-8 cm thick organic mulch around plants"
+            }
+        }
+        
+        if problem in organic_solutions:
+            solution = organic_solutions[problem]
+            st.success("**Natural Solutions:**")
+            for sol in solution["solutions"]:
+                st.write(f"• {sol}")
+            st.info(f"**Application Method:** {solution['application']}")
+    
+    with tab3:
+        st.subheader("🏆 Farm Sustainability Scoring System")
+        
+        st.markdown("### 📊 Assess Your Farm's Sustainability")
+        
+        # Sustainability assessment form
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("**🌿 Environmental Factors**")
+            water_conservation = st.slider("Water Conservation Practices", 0, 10, 5)
+            soil_management = st.slider("Soil Health Management", 0, 10, 5)
+            biodiversity = st.slider("Biodiversity Support", 0, 10, 5)
+            chemical_reduction = st.slider("Chemical Usage Reduction", 0, 10, 5)
+            
+        with col2:
+            st.markdown("**💰 Economic Factors**")
+            cost_efficiency = st.slider("Cost Efficiency", 0, 10, 5)
+            yield_stability = st.slider("Yield Stability", 0, 10, 5)
+            market_access = st.slider("Market Access", 0, 10, 5)
+            profit_margin = st.slider("Profit Margins", 0, 10, 5)
+            
+        if st.button("Calculate Sustainability Score"):
+            # Calculate weighted sustainability score
+            environmental_score = (water_conservation + soil_management + biodiversity + chemical_reduction) / 4
+            economic_score = (cost_efficiency + yield_stability + market_access + profit_margin) / 4
+            
+            overall_score = (environmental_score * 0.6 + economic_score * 0.4)
+            
+            # Display results with color coding
+            col3, col4, col5 = st.columns(3)
+            
+            with col3:
+                st.metric("Environmental Score", f"{environmental_score:.1f}/10")
+                
+            with col4:
+                st.metric("Economic Score", f"{economic_score:.1f}/10")
+                
+            with col5:
+                if overall_score >= 8:
+                    st.success(f"Overall Score: {overall_score:.1f}/10 - Excellent!")
+                elif overall_score >= 6:
+                    st.warning(f"Overall Score: {overall_score:.1f}/10 - Good")
+                else:
+                    st.error(f"Overall Score: {overall_score:.1f}/10 - Needs Improvement")
+            
+            # Recommendations based on score
+            st.markdown("### 💡 Improvement Recommendations")
+            
+            if environmental_score < 6:
+                st.write("🌱 **Environmental Focus Areas:**")
+                st.write("- Implement drip irrigation systems")
+                st.write("- Start composting program")
+                st.write("- Plant native species for biodiversity")
+                st.write("- Reduce chemical inputs by 30%")
+                
+            if economic_score < 6:
+                st.write("💰 **Economic Focus Areas:**")
+                st.write("- Explore value-added products")
+                st.write("- Join farmer cooperatives")
+                st.write("- Implement precision agriculture")
+                st.write("- Diversify crop portfolio")
+    
+    with tab4:
+        st.subheader("📊 Agricultural Crisis Management Dashboard")
+        
+        # Crisis monitoring metrics
+        st.markdown("### 🚨 Real-time Crisis Indicators")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            drought_risk = st.metric("Drought Risk", "Medium", "↑ 15%")
+            
+        with col2:
+            pest_alert = st.metric("Pest Alert Level", "Low", "↓ 5%")
+            
+        with col3:
+            market_volatility = st.metric("Price Volatility", "High", "↑ 23%")
+            
+        with col4:
+            weather_stress = st.metric("Weather Stress", "Moderate", "→ 0%")
+        
+        # Crisis response recommendations
+        st.markdown("### 🎯 Crisis Response Strategies")
+        
+        crisis_type = st.selectbox("Select Crisis Type:", 
+                                 ["Drought", "Flood", "Pest Outbreak", "Market Crash", "Disease Epidemic"])
+        
+        crisis_responses = {
+            "Drought": {
+                "immediate": ["Implement water rationing", "Switch to drought-resistant varieties", "Apply mulching"],
+                "short_term": ["Install drip irrigation", "Harvest rainwater", "Reduce cultivated area"],
+                "long_term": ["Develop water storage", "Improve soil organic matter", "Plant windbreaks"]
+            },
+            "Flood": {
+                "immediate": ["Ensure proper drainage", "Harvest ready crops", "Protect stored grain"],
+                "short_term": ["Replant if necessary", "Apply fungicides", "Clear drainage channels"],
+                "long_term": ["Build raised beds", "Improve field drainage", "Plant flood-resistant crops"]
+            },
+            "Pest Outbreak": {
+                "immediate": ["Apply organic pesticides", "Remove infected plants", "Release beneficial insects"],
+                "short_term": ["Monitor pest population", "Rotate crops", "Maintain field hygiene"],
+                "long_term": ["Develop IPM strategy", "Build biodiversity", "Train on pest identification"]
+            },
+            "Market Crash": {
+                "immediate": ["Hold produce if possible", "Find alternative markets", "Process for value addition"],
+                "short_term": ["Diversify crops", "Form farmer groups", "Explore direct marketing"],
+                "long_term": ["Build storage facilities", "Develop contracts", "Create brand identity"]
+            },
+            "Disease Epidemic": {
+                "immediate": ["Isolate infected areas", "Apply bio-fungicides", "Improve ventilation"],
+                "short_term": ["Use resistant varieties", "Adjust planting density", "Monitor closely"],
+                "long_term": ["Improve crop rotation", "Build soil health", "Maintain genetic diversity"]
+            }
+        }
+        
+        if crisis_type in crisis_responses:
+            response = crisis_responses[crisis_type]
+            
+            col5, col6, col7 = st.columns(3)
+            
+            with col5:
+                st.markdown("**⚡ Immediate Actions (0-7 days)**")
+                for action in response["immediate"]:
+                    st.write(f"• {action}")
+                    
+            with col6:
+                st.markdown("**📅 Short-term (1-4 weeks)**")
+                for action in response["short_term"]:
+                    st.write(f"• {action}")
+                    
+            with col7:
+                st.markdown("**🎯 Long-term (1+ months)**")
+                for action in response["long_term"]:
+                    st.write(f"• {action}")
+        
+        # Emergency contact information
+        st.markdown("### 📞 Emergency Contacts")
+        
+        emergency_contacts = {
+            "Agricultural Extension Officer": "+91-XXXX-XXXX-XX",
+            "Veterinary Services": "+91-XXXX-XXXX-XX", 
+            "Weather Department": "+91-XXXX-XXXX-XX",
+            "Market Information": "+91-XXXX-XXXX-XX",
+            "Insurance Claims": "+91-XXXX-XXXX-XX"
+        }
+        
+        for service, contact in emergency_contacts.items():
+            st.write(f"📱 **{service}:** {contact}")
 
 if __name__ == "__main__":
     main()
